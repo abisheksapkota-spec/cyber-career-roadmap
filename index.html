@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Career Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0d1117; --bg-elevated:#131a22; --bg-card:#161d27;
+    --border:#2a323d; --border-soft:#1e2530;
+    --text:#e6edf3; --text-muted:#8b96a5; --text-dim:#5c6673;
+    --accent:#4ade80; --active:#58a6ff; --warn:#f0b429;
+    --l0:#1a212b; --l1:#14532d; --l2:#15803d; --l3:#22c55e; --l4:#4ade80;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:'Inter',-apple-system,sans-serif; line-height:1.5; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:720px; margin:0 auto; padding:36px 20px 80px; }
+  .kicker { font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--text-dim); margin-bottom:10px; }
+  h1 { font-family:'JetBrains Mono',monospace; font-weight:800; font-size:clamp(26px,6vw,36px); margin:0 0 6px; }
+  .subtitle { color:var(--text-muted); font-size:15px; margin:0 0 26px; }
+  h2 { font-family:'JetBrains Mono',monospace; font-size:14px; font-weight:700; color:var(--text-muted); margin:0 0 12px; letter-spacing:.02em; }
+  section { margin-bottom:28px; }
+
+  .stats { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+  @media (min-width:560px) { .stats { grid-template-columns:repeat(4,1fr); } }
+  .stat { background:var(--bg-card); border:1px solid var(--border); border-radius:10px; padding:14px 16px; }
+  .stat-num { font-family:'JetBrains Mono',monospace; font-weight:800; font-size:30px; line-height:1; color:var(--active); }
+  .stat.streak .stat-num { color:var(--accent); }
+  .stat-label { color:var(--text-muted); font-size:12.5px; margin-top:6px; }
+
+  .card { background:var(--bg-card); border:1px solid var(--border-soft); border-radius:10px; padding:16px 18px; }
+  .row { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px; }
+  .field { flex:1; min-width:140px; }
+  .field label { display:block; font-size:12px; color:var(--text-muted); margin-bottom:4px; }
+  input[type="text"], input[type="number"] { width:100%; background:var(--bg); border:1px solid var(--border); border-radius:6px; color:var(--text); font-family:'Inter',sans-serif; font-size:14px; padding:9px 10px; }
+  input:focus { outline:none; border-color:var(--active); }
+  button, .btn { font-family:'Inter',sans-serif; font-size:13.5px; font-weight:500; padding:9px 14px; border-radius:6px; border:1px solid var(--border); background:var(--bg-elevated); color:var(--text); cursor:pointer; text-decoration:none; display:inline-block; }
+  button:hover, .btn:hover { border-color:var(--text-dim); }
+  button.primary { background:var(--accent); border-color:var(--accent); color:#0d1117; font-weight:600; }
+  button.primary:hover { filter:brightness(1.08); }
+  .msg { font-size:13px; color:var(--text-muted); margin:8px 0 0; min-height:18px; }
+  .msg.err { color:#f85149; }
+  .msg.ok { color:var(--accent); }
+
+  .heat-wrap { overflow-x:auto; }
+  .heat { display:grid; grid-auto-flow:column; grid-template-rows:repeat(7,14px); grid-auto-columns:14px; gap:4px; width:max-content; }
+  .cell { width:14px; height:14px; border-radius:3px; background:var(--l0); }
+  .cell.l1 { background:var(--l1); } .cell.l2 { background:var(--l2); } .cell.l3 { background:var(--l3); } .cell.l4 { background:var(--l4); }
+  .cell.future { background:transparent; }
+  .cell.today { outline:1.5px solid var(--active); outline-offset:1px; }
+  .legend { display:flex; align-items:center; gap:6px; margin-top:10px; font-size:12px; color:var(--text-dim); }
+
+  .bar-row { margin-bottom:14px; }
+  .bar-top { display:flex; justify-content:space-between; font-size:13px; margin-bottom:6px; }
+  .bar-top a { color:var(--active); text-decoration:none; }
+  .bar-top .v { font-family:'JetBrains Mono',monospace; color:var(--accent); }
+  .bar-bg { height:8px; background:var(--border-soft); border-radius:4px; overflow:hidden; }
+  .bar-fill { height:100%; background:var(--accent); width:0; transition:width .4s ease; }
+
+  .links { display:flex; flex-wrap:wrap; gap:8px; }
+  .links a { font-size:13px; padding:7px 12px; border-radius:999px; border:1px solid var(--border); color:var(--text); text-decoration:none; background:var(--bg-card); }
+  .links a:hover { border-color:var(--active); color:var(--active); }
+  .group-label { font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--text-dim); margin:14px 0 8px; text-transform:uppercase; letter-spacing:.05em; }
+  .group-label:first-child { margin-top:0; }
+  footer { margin-top:36px; padding-top:20px; border-top:1px solid var(--border-soft); font-size:12.5px; color:var(--text-dim); }
+  footer .row { margin-top:10px; }
+  input[type="file"] { display:none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="kicker">// dashboard</div>
+  <h1>Career Dashboard</h1>
+  <p class="subtitle">Cyber Security · CQUniversity · log your day, keep the streak alive</p>
+
+  <section>
+    <div class="stats">
+      <div class="stat streak"><div class="stat-num" id="s-current">0</div><div class="stat-label">day streak</div></div>
+      <div class="stat"><div class="stat-num" id="s-best">0</div><div class="stat-label">best streak</div></div>
+      <div class="stat"><div class="stat-num" id="s-total">0</div><div class="stat-label">days logged</div></div>
+      <div class="stat"><div class="stat-num" id="s-holiday">0</div><div class="stat-label">holiday days left</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>TODAY</h2>
+    <div class="card">
+      <div class="row">
+        <div class="field" style="max-width:150px"><label for="minutes">Minutes studied</label><input type="number" id="minutes" min="0" max="1440" step="5" placeholder="120"></div>
+        <div class="field"><label for="note">One line: what did you do?</label><input type="text" id="note" maxlength="200" placeholder="TryHackMe Pre Security: Linux room"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label for="repo">Your GitHub repo (username/repo)</label><input type="text" id="repo" placeholder="your-username/cyber-career-roadmap" autocapitalize="off" autocomplete="off" spellcheck="false"></div>
+      </div>
+      <div class="row">
+        <button class="primary" id="btn-done">Mark today done</button>
+        <button id="btn-github">Create today's log on GitHub</button>
+        <button id="btn-undo">Undo today</button>
+      </div>
+      <p class="msg" id="msg"></p>
+    </div>
+  </section>
+
+  <section>
+    <h2>LAST 13 WEEKS</h2>
+    <div class="card">
+      <div class="heat-wrap"><div class="heat" id="heat"></div></div>
+      <div class="legend">Less
+        <span class="cell"></span><span class="cell l1"></span><span class="cell l2"></span><span class="cell l3"></span><span class="cell l4"></span>
+        More</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>TRACKERS</h2>
+    <div class="card">
+      <div class="bar-row">
+        <div class="bar-top"><a href="tracker/holiday-3-months.html">3-month holiday plan →</a><span class="v" id="v-holiday">0 / 38</span></div>
+        <div class="bar-bg"><div class="bar-fill" id="f-holiday"></div></div>
+      </div>
+      <div class="bar-row" style="margin-bottom:0">
+        <div class="bar-top"><a href="tracker/career-roadmap.html">Career roadmap to graduation →</a><span class="v" id="v-career">0 / 33</span></div>
+        <div class="bar-bg"><div class="bar-fill" id="f-career"></div></div>
+      </div>
+    </div>
+    <p class="msg">Tracker ticks are saved in this browser. <code>CHECKLIST.md</code> in the repo is the official record.</p>
+  </section>
+
+  <section>
+    <h2>QUICK LINKS</h2>
+    <div class="card">
+      <div class="group-label">In this repo</div>
+      <div class="links">
+        <a href="CHECKLIST.md">Checklist</a>
+        <a href="docs/ROADMAP.md">Roadmap</a>
+        <a href="docs/CERTIFICATIONS.md">Certificates</a>
+        <a href="docs/RESOURCES.md">All resources</a>
+        <a href="docs/SCHOLARSHIPS.md">Scholarships</a>
+        <a href="docs/DAILY-ROUTINE.md">Daily routine</a>
+      </div>
+      <div class="group-label">Learn and practise</div>
+      <div class="links">
+        <a href="https://tryhackme.com" target="_blank" rel="noopener">TryHackMe</a>
+        <a href="https://sadservers.com" target="_blank" rel="noopener">Sad Servers</a>
+        <a href="https://www.professormesser.com" target="_blank" rel="noopener">Professor Messer</a>
+        <a href="https://picoctf.org" target="_blank" rel="noopener">picoCTF</a>
+        <a href="https://www.hackthebox.com" target="_blank" rel="noopener">Hack The Box</a>
+        <a href="http://flaws.cloud" target="_blank" rel="noopener">flaws.cloud</a>
+        <a href="https://www.skillsforall.com" target="_blank" rel="noopener">Cisco Skills for All</a>
+      </div>
+      <div class="group-label">Certificates</div>
+      <div class="links">
+        <a href="https://www.isc2.org/certifications/cc" target="_blank" rel="noopener">ISC2 CC</a>
+        <a href="https://www.comptia.org/certifications/security" target="_blank" rel="noopener">Security+</a>
+        <a href="https://www.comptia.org/certifications/network" target="_blank" rel="noopener">Network+</a>
+        <a href="https://www.credly.com" target="_blank" rel="noopener">Credly</a>
+      </div>
+      <div class="group-label">Community and uni</div>
+      <div class="links">
+        <a href="https://www.aisa.org.au" target="_blank" rel="noopener">AISA</a>
+        <a href="https://bsidessydney.org" target="_blank" rel="noopener">BSides Sydney</a>
+        <a href="https://www.linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://www.cqu.edu.au/study/prepare/scholarships" target="_blank" rel="noopener">CQU scholarships</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Your log is stored in this browser. Export it to back it up or move devices.
+    <div class="row">
+      <button id="btn-export">Export data</button>
+      <button id="btn-import">Import data</button>
+      <input type="file" id="file-import" accept="application/json">
+    </div>
+  </footer>
+</div>
+
+<script>
+// ==CORE START==
+function ymd(d) {
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+}
+function parseYmd(s) {
+  const p = s.split('-').map(Number);
+  return new Date(p[0], p[1] - 1, p[2], 12, 0, 0);
+}
+function isDone(log, key) {
+  return !!(log[key] && log[key].done);
+}
+function computeStreaks(log, now) {
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0);
+  let d = new Date(today);
+  if (!isDone(log, ymd(d))) d.setDate(d.getDate() - 1);
+  let current = 0;
+  while (isDone(log, ymd(d))) { current++; d.setDate(d.getDate() - 1); }
+  const keys = Object.keys(log).filter(k => isDone(log, k)).sort();
+  let best = 0, run = 0, prev = null;
+  for (const k of keys) {
+    const dt = parseYmd(k);
+    run = prev && Math.round((dt - prev) / 86400000) === 1 ? run + 1 : 1;
+    if (run > best) best = run;
+    prev = dt;
+  }
+  return { current: current, best: best, total: keys.length };
+}
+function level(entry) {
+  if (!entry || !entry.done) return 0;
+  const m = Number(entry.min) || 0;
+  if (m >= 180) return 4;
+  if (m >= 120) return 3;
+  if (m >= 60) return 2;
+  return 1;
+}
+function logMarkdown(dateKey, minutes, note) {
+  return '# ' + dateKey + '\n\n' +
+    '**Minutes studied:** ' + (minutes || 0) + '\n' +
+    '**Energy (1-5):** 3\n\n' +
+    '## What I did\n\n- ' + (note || '') + '\n\n' +
+    '## What I learned\n\n- \n\n' +
+    '## Blockers / questions for Claude\n\n- \n\n' +
+    '## Tomorrow\n\n- \n';
+}
+function githubNewFileUrl(repo, dateKey, md) {
+  return 'https://github.com/' + repo + '/new/main/daily-log?filename=' +
+    encodeURIComponent(dateKey + '.md') + '&value=' + encodeURIComponent(md);
+}
+function validRepo(r) {
+  return /^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(r);
+}
+// ==CORE END==
+
+const LOG_KEY = 'career-daily-log';
+const REPO_KEY = 'career-repo';
+const TRACKERS = [
+  { key: 'holiday-roadmap-progress', total: 38, bar: 'f-holiday', val: 'v-holiday' },
+  { key: 'cyber-roadmap-progress', total: 33, bar: 'f-career', val: 'v-career' }
+];
+const HOLIDAY_END = new Date('2027-01-07T00:00:00');
+
+function load(k, fallback) {
+  try { const r = localStorage.getItem(k); return r ? JSON.parse(r) : fallback; } catch (e) { return fallback; }
+}
+function save(k, v) {
+  try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {}
+}
+function $(id) { return document.getElementById(id); }
+
+function say(text, cls) {
+  const m = $('msg');
+  m.textContent = text;
+  m.className = 'msg' + (cls ? ' ' + cls : '');
+}
+
+function renderStats() {
+  const log = load(LOG_KEY, {});
+  const s = computeStreaks(log, new Date());
+  $('s-current').textContent = s.current;
+  $('s-best').textContent = s.best;
+  $('s-total').textContent = s.total;
+  $('s-holiday').textContent = Math.max(0, Math.ceil((HOLIDAY_END - new Date()) / 86400000));
+}
+
+function renderHeat() {
+  const log = load(LOG_KEY, {});
+  const heat = $('heat');
+  heat.innerHTML = '';
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0);
+  const dow = (today.getDay() + 6) % 7;            // Monday = 0
+  const start = new Date(today);
+  start.setDate(start.getDate() - dow - 12 * 7);   // Monday 12 weeks back
+  for (let i = 0; i < 13 * 7; i++) {
+    const d = new Date(start);
+    d.setDate(start.getDate() + i);
+    const key = ymd(d);
+    const cell = document.createElement('div');
+    cell.className = 'cell';
+    if (d > today) {
+      cell.classList.add('future');
+    } else {
+      const lv = level(log[key]);
+      if (lv) cell.classList.add('l' + lv);
+      const e = log[key];
+      cell.title = key + (e && e.done ? ': ' + (e.min || 0) + ' min' + (e.note ? ' · ' + e.note : '') : ': no log');
+      if (key === ymd(today)) cell.classList.add('today');
+    }
+    heat.appendChild(cell);
+  }
+}
+
+function renderTrackers() {
+  TRACKERS.forEach(t => {
+    const state = load(t.key, {});
+    const done = Object.keys(state).filter(k => state[k]).length;
+    const pct = Math.min(100, Math.round(done / t.total * 100));
+    $(t.val).textContent = done + ' / ' + t.total;
+    $(t.bar).style.width = pct + '%';
+  });
+}
+
+function currentEntry() {
+  const raw = $('minutes').value;
+  return {
+    done: true,
+    min: raw === '' ? 0 : Math.max(0, Math.min(1440, Number(raw) || 0)),
+    note: $('note').value.trim()
+  };
+}
+
+function markDone() {
+  const log = load(LOG_KEY, {});
+  const key = ymd(new Date());
+  log[key] = currentEntry();
+  save(LOG_KEY, log);
+  renderAll();
+  return key;
+}
+
+function renderAll() {
+  renderStats();
+  renderHeat();
+  renderTrackers();
+}
+
+function init() {
+  $('repo').value = load(REPO_KEY, '') || '';
+  const log = load(LOG_KEY, {});
+  const todayEntry = log[ymd(new Date())];
+  if (todayEntry && todayEntry.done) {
+    $('minutes').value = todayEntry.min || '';
+    $('note').value = todayEntry.note || '';
+    say('Today is logged. Nice work.', 'ok');
+  }
+
+  $('btn-done').addEventListener('click', () => {
+    markDone();
+    say('Logged for today. To keep it in the repo too, use "Create today\'s log on GitHub".', 'ok');
+  });
+
+  $('btn-undo').addEventListener('click', () => {
+    const l = load(LOG_KEY, {});
+    delete l[ymd(new Date())];
+    save(LOG_KEY, l);
+    $('minutes').value = '';
+    $('note').value = '';
+    renderAll();
+    say('Today\'s log removed.');
+  });
+
+  $('btn-github').addEventListener('click', () => {
+    const repo = $('repo').value.trim();
+    if (!validRepo(repo)) {
+      say('Enter your repo as username/repo first, for example abishek/cyber-career-roadmap.', 'err');
+      return;
+    }
+    save(REPO_KEY, repo);
+    const key = markDone();
+    const entry = currentEntry();
+    window.open(githubNewFileUrl(repo, key, logMarkdown(key, entry.min, entry.note)), '_blank', 'noopener');
+    say('Opened GitHub with today\'s file prefilled. Review it and tap Commit new file.', 'ok');
+  });
+
+  $('btn-export').addEventListener('click', () => {
+    const data = {
+      version: 1,
+      log: load(LOG_KEY, {}),
+      repo: load(REPO_KEY, ''),
+      trackers: {}
+    };
+    TRACKERS.forEach(t => { data.trackers[t.key] = load(t.key, {}); });
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'career-dashboard-backup.json';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  });
+
+  $('btn-import').addEventListener('click', () => $('file-import').click());
+  $('file-import').addEventListener('change', e => {
+    const f = e.target.files && e.target.files[0];
+    if (!f) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const data = JSON.parse(reader.result);
+        if (data.log && typeof data.log === 'object') save(LOG_KEY, Object.assign({}, load(LOG_KEY, {}), data.log));
+        if (typeof data.repo === 'string' && validRepo(data.repo)) { save(REPO_KEY, data.repo); $('repo').value = data.repo; }
+        if (data.trackers && typeof data.trackers === 'object') {
+          TRACKERS.forEach(t => {
+            if (data.trackers[t.key] && typeof data.trackers[t.key] === 'object') {
+              save(t.key, Object.assign({}, load(t.key, {}), data.trackers[t.key]));
+            }
+          });
+        }
+        renderAll();
+        say('Backup imported.', 'ok');
+      } catch (err) {
+        say('That file could not be read.', 'err');
+      }
+    };
+    reader.readAsText(f);
+    e.target.value = '';
+  });
+
+  renderAll();
+}
+
+init();
+</script>
+</body>
+</html>

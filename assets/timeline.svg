@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 280" width="1000" height="280" role="img" aria-label="Career timeline from Oct 2026 to mid 2028">
+  <rect width="1000" height="280" fill="#0d1117"/>
+  <rect x="0.5" y="0.5" width="999" height="279" fill="none" stroke="#2a323d"/>
+  <g font-family="'JetBrains Mono', Consolas, monospace" text-anchor="middle">
+    <text x="500" y="38" fill="#e6edf3" font-size="18" font-weight="700">Roadmap timeline</text>
+    <line x1="100" y1="140" x2="900" y2="140" stroke="#2a323d" stroke-width="3"/>
+    <line x1="100" y1="140" x2="180" y2="140" stroke="#4ade80" stroke-width="3"/>
+
+    <!-- 1 -->
+    <circle cx="100" cy="140" r="16" fill="#4ade80"/>
+    <text x="100" y="146" fill="#0d1117" font-size="15" font-weight="800">1</text>
+    <text x="100" y="100" fill="#e6edf3" font-size="14" font-weight="700">Foundation</text>
+    <text x="100" y="188" fill="#8b96a5" font-size="12">Oct–Dec 2026</text>
+    <text x="100" y="208" fill="#4ade80" font-size="12">◀ you are here</text>
+
+    <!-- 2 -->
+    <circle cx="260" cy="140" r="16" fill="#0d1117" stroke="#58a6ff" stroke-width="2"/>
+    <text x="260" y="146" fill="#58a6ff" font-size="15" font-weight="800">2</text>
+    <text x="260" y="100" fill="#e6edf3" font-size="14" font-weight="700">Lab + Security+</text>
+    <text x="260" y="188" fill="#8b96a5" font-size="12">Jan–Jun 2027</text>
+
+    <!-- 3 -->
+    <circle cx="420" cy="140" r="16" fill="#0d1117" stroke="#58a6ff" stroke-width="2"/>
+    <text x="420" y="146" fill="#58a6ff" font-size="15" font-weight="800">3</text>
+    <text x="420" y="100" fill="#e6edf3" font-size="14" font-weight="700">Experience</text>
+    <text x="420" y="188" fill="#8b96a5" font-size="12">Jul–Dec 2027</text>
+
+    <!-- 4 -->
+    <circle cx="580" cy="140" r="16" fill="#0d1117" stroke="#58a6ff" stroke-width="2"/>
+    <text x="580" y="146" fill="#58a6ff" font-size="15" font-weight="800">4</text>
+    <text x="580" y="100" fill="#e6edf3" font-size="14" font-weight="700">Specialise</text>
+    <text x="580" y="188" fill="#8b96a5" font-size="12">Jan–Mar 2028</text>
+
+    <!-- 5 -->
+    <circle cx="740" cy="140" r="16" fill="#0d1117" stroke="#58a6ff" stroke-width="2"/>
+    <text x="740" y="146" fill="#58a6ff" font-size="15" font-weight="800">5</text>
+    <text x="740" y="100" fill="#e6edf3" font-size="14" font-weight="700">Internship</text>
+    <text x="740" y="188" fill="#8b96a5" font-size="12">Apr–Jun 2028</text>
+
+    <!-- 6 -->
+    <circle cx="900" cy="140" r="16" fill="#0d1117" stroke="#f0b429" stroke-width="2"/>
+    <text x="900" y="146" fill="#f0b429" font-size="15" font-weight="800">6</text>
+    <text x="900" y="100" fill="#e6edf3" font-size="14" font-weight="700">Land the job</text>
+    <text x="900" y="188" fill="#8b96a5" font-size="12">~Jun 2028</text>
+
+    <text x="500" y="256" fill="#5c6673" font-size="12">Certs on the way: Cisco Intro (done) → ISC2 CC → Security+ → Network+/CCNA</text>
+  </g>
+</svg>

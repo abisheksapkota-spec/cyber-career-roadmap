@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3-Month Holiday Roadmap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0d1117; --bg-elevated:#131a22; --bg-card:#161d27;
+    --border:#2a323d; --border-soft:#1e2530;
+    --text:#e6edf3; --text-muted:#8b96a5; --text-dim:#5c6673;
+    --accent:#4ade80; --accent-dim:rgba(74,222,128,.12);
+    --active:#58a6ff; --cert:#f0b429; --cert-dim:rgba(240,180,41,.12);
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:'Inter',-apple-system,sans-serif; line-height:1.5; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:720px; margin:0 auto; padding:40px 20px 80px; }
+  .kicker { font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--text-dim); margin-bottom:10px; }
+  h1 { font-family:'JetBrains Mono',monospace; font-weight:800; font-size:clamp(26px,6vw,36px); margin:0 0 8px; }
+  .subtitle { color:var(--text-muted); font-size:15px; margin:0 0 28px; }
+  .stats { display:flex; gap:12px; margin-bottom:16px; }
+  .stat { flex:1; background:var(--bg-card); border:1px solid var(--border); border-radius:10px; padding:16px 18px; }
+  .stat-num { font-family:'JetBrains Mono',monospace; font-weight:800; font-size:32px; color:var(--active); line-height:1; }
+  .stat-label { color:var(--text-muted); font-size:12.5px; margin-top:6px; }
+  .progress-outer { background:var(--bg-elevated); border:1px solid var(--border); border-radius:8px; padding:16px 18px; margin-bottom:36px; }
+  .progress-top { display:flex; justify-content:space-between; margin-bottom:10px; font-size:13px; }
+  .progress-top .label { color:var(--text-muted); }
+  .progress-top .value { font-family:'JetBrains Mono',monospace; color:var(--accent); font-weight:500; }
+  .bar-bg { height:8px; background:var(--border-soft); border-radius:4px; overflow:hidden; }
+  .bar-fill { height:100%; background:var(--accent); width:0; transition:width .4s ease; }
+
+  .daily { background:var(--bg-card); border:1px solid var(--border-soft); border-radius:10px; padding:16px 18px; margin-bottom:36px; font-size:14px; }
+  .daily h2 { font-family:'JetBrains Mono',monospace; font-size:14px; margin:0 0 8px; color:var(--text-muted); }
+  .daily ul { margin:0; padding-left:18px; color:var(--text-muted); }
+  .daily li { margin-bottom:4px; }
+
+  .month { margin-bottom:40px; }
+  .month-head { display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:4px 14px; margin-bottom:4px; }
+  .month-title { font-family:'JetBrains Mono',monospace; font-weight:700; font-size:18px; }
+  .month-dates { font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-dim); }
+  .month-goal { color:var(--text-muted); font-size:13.5px; margin:4px 0 16px; }
+  .week-label { font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-dim); margin:16px 0 8px; text-transform:uppercase; letter-spacing:.04em; }
+
+  .item { display:flex; align-items:flex-start; gap:10px; padding:9px 12px; margin-bottom:6px; background:var(--bg-card); border:1px solid var(--border-soft); border-left:2px solid var(--border-soft); border-radius:6px; cursor:pointer; transition:border-color .2s, background .2s; }
+  .item:hover { border-color:var(--border); }
+  .item.checked { border-left-color:var(--accent); background:var(--accent-dim); }
+  .item.cert { border-left-color:var(--cert); }
+  .item.cert.checked { border-left-color:var(--accent); }
+  .item input { appearance:none; -webkit-appearance:none; width:16px; height:16px; border-radius:4px; border:1.5px solid var(--text-dim); background:transparent; margin-top:2px; flex-shrink:0; cursor:pointer; position:relative; }
+  .item input:checked { background:var(--accent); border-color:var(--accent); }
+  .item input:checked::after { content:""; position:absolute; left:5px; top:1px; width:4px; height:8px; border:solid var(--bg); border-width:0 2px 2px 0; transform:rotate(45deg); }
+  .item label { font-size:14px; cursor:pointer; flex:1; }
+  .item.checked label { color:var(--text-muted); text-decoration:line-through; text-decoration-color:var(--text-dim); }
+  .tag { font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--cert); background:var(--cert-dim); border-radius:4px; padding:2px 6px; margin-left:6px; white-space:nowrap; text-decoration:none; }
+
+  .notes { margin-top:44px; padding:18px 20px; background:var(--bg-card); border:1px solid var(--border-soft); border-radius:10px; font-size:13.5px; color:var(--text-muted); }
+  .notes h2 { font-family:'JetBrains Mono',monospace; font-size:14px; color:var(--text); margin:0 0 8px; }
+  .notes ul { margin:0; padding-left:18px; }
+  .notes li { margin-bottom:6px; }
+  footer { margin-top:32px; padding-top:20px; border-top:1px solid var(--border-soft); font-size:13px; color:var(--text-dim); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+  footer p { margin:0; max-width:460px; }
+  #reset-btn { background:none; border:1px solid var(--border); color:var(--text-muted); font-family:'Inter',sans-serif; font-size:12.5px; padding:7px 14px; border-radius:6px; cursor:pointer; }
+  #reset-btn:hover { border-color:var(--text-dim); color:var(--text); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="kicker">// holiday-roadmap.html</div>
+  <h1>3-Month Holiday Roadmap</h1>
+  <p class="subtitle">8 Oct 2026 – 7 Jan 2027 · Goal: strong foundations, 1–2 certificates, visible proof of skill before uni restarts</p>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-num" id="days-left">—</div><div class="stat-label">days of holiday left</div></div>
+    <div class="stat"><div class="stat-num" id="pct">0%</div><div class="stat-label">plan complete</div></div>
+  </div>
+  <div class="progress-outer">
+    <div class="progress-top"><span class="label">Overall progress</span><span class="value" id="progress-value">0 / 0</span></div>
+    <div class="bar-bg"><div class="bar-fill" id="progress-fill"></div></div>
+  </div>
+
+  <div class="daily">
+    <h2>DAILY HABIT (2–3 hours)</h2>
+    <ul>
+      <li>1 hour: structured learning (course or videos)</li>
+      <li>1 hour: hands-on practice (TryHackMe, Sad Servers, home lab)</li>
+      <li>15 minutes: write notes on what you learned in your GitHub repo</li>
+    </ul>
+  </div>
+
+  <!-- MONTH 1 -->
+  <div class="month">
+    <div class="month-head"><span class="month-title">Month 1: Foundations</span><span class="month-dates">8 Oct – 7 Nov</span></div>
+    <p class="month-goal">Linux, networking and your online setup. Finish the beginner paths.</p>
+
+    <div class="week-label">Week 1</div>
+    <div class="item"><input type="checkbox" id="m1-1"><label for="m1-1">Upload this roadmap repo to your GitHub and turn on GitHub Pages (see README)</label></div>
+    <div class="item"><input type="checkbox" id="m1-2"><label for="m1-2">Finish LinkedIn profile (headline, About, education) and add your Cisco and PMI badges</label></div>
+    <div class="item"><input type="checkbox" id="m1-3"><label for="m1-3">Create TryHackMe account and start the Pre Security path</label></div>
+    <div class="item"><input type="checkbox" id="m1-4"><label for="m1-4">Join TryHackMe and HackTheBox Discord servers</label></div>
+
+    <div class="week-label">Week 2</div>
+    <div class="item"><input type="checkbox" id="m1-5"><label for="m1-5">Linux basics: navigation, files, permissions, users</label></div>
+    <div class="item"><input type="checkbox" id="m1-6"><label for="m1-6">Solve 5 easy Sad Servers scenarios</label></div>
+    <div class="item"><input type="checkbox" id="m1-7"><label for="m1-7">Install VirtualBox and a Kali or Ubuntu VM</label></div>
+
+    <div class="week-label">Week 3</div>
+    <div class="item"><input type="checkbox" id="m1-8"><label for="m1-8">Networking: OSI model, TCP/IP, DNS, DHCP, ports and protocols</label></div>
+    <div class="item"><input type="checkbox" id="m1-9"><label for="m1-9">Learn subnetting and practise 20 subnetting problems</label></div>
+    <div class="item"><input type="checkbox" id="m1-10"><label for="m1-10">Install Wireshark and capture/read basic traffic (DNS, HTTP)</label></div>
+
+    <div class="week-label">Week 4</div>
+    <div class="item"><input type="checkbox" id="m1-11"><label for="m1-11">Finish TryHackMe Pre Security path</label></div>
+    <div class="item cert"><input type="checkbox" id="m1-12"><label for="m1-12">Start ISC2 Certified in Cybersecurity (CC) free training<span class="tag">CERT</span></label></div>
+    <div class="item"><input type="checkbox" id="m1-13"><label for="m1-13">Post on LinkedIn: badges earned and your 3-month plan</label></div>
+  </div>
+
+  <!-- MONTH 2 -->
+  <div class="month">
+    <div class="month-head"><span class="month-title">Month 2: Core skills</span><span class="month-dates">8 Nov – 7 Dec</span></div>
+    <p class="month-goal">Python, security fundamentals and your first certificate.</p>
+
+    <div class="week-label">Week 5</div>
+    <div class="item"><input type="checkbox" id="m2-1"><label for="m2-1">Python basics: variables, loops, functions, files</label></div>
+    <div class="item"><input type="checkbox" id="m2-2"><label for="m2-2">Write a simple port scanner or password checker and push it to GitHub</label></div>
+    <div class="item"><input type="checkbox" id="m2-3"><label for="m2-3">Start TryHackMe Cyber Security 101 or Jr Penetration Tester path</label></div>
+
+    <div class="week-label">Week 6</div>
+    <div class="item"><input type="checkbox" id="m2-4"><label for="m2-4">Security basics: CIA triad, threats, malware types, social engineering</label></div>
+    <div class="item"><input type="checkbox" id="m2-5"><label for="m2-5">Write a Python script to parse a log file and count failed logins</label></div>
+    <div class="item"><input type="checkbox" id="m2-6"><label for="m2-6">Write your first TryHackMe writeup in your GitHub repo</label></div>
+
+    <div class="week-label">Week 7</div>
+    <div class="item"><input type="checkbox" id="m2-7"><label for="m2-7">Build home lab: attacker VM + vulnerable VM (e.g. Metasploitable or DVWA) on a host-only network</label></div>
+    <div class="item"><input type="checkbox" id="m2-8"><label for="m2-8">Run an nmap scan on your own lab and document the results</label></div>
+    <div class="item"><input type="checkbox" id="m2-9"><label for="m2-9">Finish ISC2 CC course modules</label></div>
+
+    <div class="week-label">Week 8</div>
+    <div class="item cert"><input type="checkbox" id="m2-10"><label for="m2-10">Book and pass ISC2 Certified in Cybersecurity (CC) exam (check it is still free for you)<span class="tag">CERT</span></label></div>
+    <div class="item"><input type="checkbox" id="m2-11"><label for="m2-11">Post your certificate on LinkedIn</label></div>
+    <div class="item"><input type="checkbox" id="m2-12"><label for="m2-12">Start Security+ study: watch Professor Messer's free SY0-701 videos</label></div>
+  </div>
+
+  <!-- MONTH 3 -->
+  <div class="month">
+    <div class="month-head"><span class="month-title">Month 3: Proof and prep</span><span class="month-dates">8 Dec – 7 Jan</span></div>
+    <p class="month-goal">Turn what you learned into visible projects and get Security+ ready.</p>
+
+    <div class="week-label">Week 9</div>
+    <div class="item"><input type="checkbox" id="m3-1"><label for="m3-1">Start TryHackMe SOC Level 1 path (best match for entry-level analyst roles)</label></div>
+    <div class="item"><input type="checkbox" id="m3-2"><label for="m3-2">Security+ videos: networking, cryptography and identity sections</label></div>
+    <div class="item"><input type="checkbox" id="m3-3"><label for="m3-3">Try 2 beginner flaws.cloud levels (after learning basic AWS concepts)</label></div>
+
+    <div class="week-label">Week 10</div>
+    <div class="item"><input type="checkbox" id="m3-4"><label for="m3-4">Security+ videos: threats, vulnerabilities, security operations</label></div>
+    <div class="item"><input type="checkbox" id="m3-5"><label for="m3-5">Write 3 more TryHackMe writeups (total of at least 4)</label></div>
+    <div class="item"><input type="checkbox" id="m3-6"><label for="m3-6">Do your first beginner CTF (e.g. picoCTF practice) and write it up</label></div>
+
+    <div class="week-label">Week 11</div>
+    <div class="item"><input type="checkbox" id="m3-7"><label for="m3-7">Finish the home lab project README on GitHub (diagram, setup steps, findings)</label></div>
+    <div class="item"><input type="checkbox" id="m3-8"><label for="m3-8">Take 2 full Security+ practice exams and review every wrong answer</label></div>
+    <div class="item"><input type="checkbox" id="m3-9"><label for="m3-9">Apply for casual helpdesk / IT support or other casual work (check visa work hours first)</label></div>
+
+    <div class="week-label">Week 12</div>
+    <div class="item"><input type="checkbox" id="m3-10"><label for="m3-10">Score 80%+ on Security+ practice exams, then pick an exam date (Feb–Apr 2027 is fine)</label></div>
+    <div class="item"><input type="checkbox" id="m3-11"><label for="m3-11">Post a LinkedIn summary: what you built and learned this holiday</label></div>
+    <div class="item"><input type="checkbox" id="m3-12"><label for="m3-12">Email CQU scholarships about Adip Rijal and International Merit scholarship eligibility</label></div>
+    <div class="item"><input type="checkbox" id="m3-13"><label for="m3-13">Plan your study routine around uni (e.g. 5 hours a week of cert study)</label></div>
+  </div>
+
+  <div class="notes">
+    <h2>Certificates and costs</h2>
+    <ul>
+      <li><strong>ISC2 Certified in Cybersecurity (CC):</strong> entry-level, training and exam have been offered free through ISC2's programme. Confirm current terms on the ISC2 website before relying on it.</li>
+      <li><strong>CompTIA Security+:</strong> the main target. The exam voucher is the big cost (several hundred AUD), so only book when you are scoring 80%+ on practice exams.</li>
+      <li><strong>Optional extras:</strong> Microsoft SC-900 (cheap fundamentals exam), free Cisco Networking Academy courses (Networking Basics, Cybersecurity Essentials), later Network+ or CCNA.</li>
+      <li><strong>Skip fee-based placement programmes.</strong> A real job or internship pays you. Spend on exam vouchers instead.</li>
+    </ul>
+  </div>
+
+  <footer>
+    <p>Progress saves in this browser. Host this on GitHub Pages and edit the dates if your holiday differs.</p>
+    <button id="reset-btn">Reset progress</button>
+  </footer>
+</div>
+
+<script>
+  const END_DATE = new Date('2027-01-07T00:00:00');
+  const KEY = 'holiday-roadmap-progress';
+
+  function load() { try { const r = localStorage.getItem(KEY); return r ? JSON.parse(r) : {}; } catch (e) { return {}; } }
+  function save(s) { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} }
+
+  function update() {
+    const boxes = document.querySelectorAll('.item input');
+    const done = document.querySelectorAll('.item input:checked').length;
+    const pct = boxes.length ? Math.round(done / boxes.length * 100) : 0;
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-value').textContent = done + ' / ' + boxes.length;
+    document.getElementById('pct').textContent = pct + '%';
+  }
+
+  function init() {
+    const days = Math.max(0, Math.ceil((END_DATE - new Date()) / 86400000));
+    document.getElementById('days-left').textContent = days;
+    const state = load();
+    document.querySelectorAll('.item input').forEach(b => {
+      if (state[b.id]) b.checked = true;
+      b.closest('.item').classList.toggle('checked', b.checked);
+      b.addEventListener('change', () => {
+        const s = load(); s[b.id] = b.checked; save(s);
+        b.closest('.item').classList.toggle('checked', b.checked);
+        update();
+      });
+    });
+    document.getElementById('reset-btn').addEventListener('click', () => {
+      if (confirm('Reset all progress?')) {
+        save({});
+        document.querySelectorAll('.item input').forEach(b => { b.checked = false; b.closest('.item').classList.remove('checked'); });
+        update();
+      }
+    });
+    update();
+  }
+  init();
+</script>
+</body>
+</html>

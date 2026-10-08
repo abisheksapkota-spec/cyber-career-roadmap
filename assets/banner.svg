@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="1200" height="300" role="img" aria-label="Cyber Security Career Roadmap banner">
+  <rect width="1200" height="300" fill="#0d1117"/>
+  <rect x="0.5" y="0.5" width="1199" height="299" fill="none" stroke="#2a323d"/>
+  <g font-family="'JetBrains Mono', 'SFMono-Regular', Consolas, monospace">
+    <text x="60" y="78" fill="#5c6673" font-size="18">// career-roadmap</text>
+    <text x="60" y="150" fill="#e6edf3" font-size="52" font-weight="800">Cyber Security</text>
+    <text x="60" y="210" fill="#4ade80" font-size="52" font-weight="800">Career Roadmap</text>
+    <text x="60" y="256" fill="#8b96a5" font-size="18">BIT · Cyber Security major · CQUniversity · Oct 2026 → mid 2028</text>
+  </g>
+  <g transform="translate(830 60)" font-family="'JetBrains Mono', Consolas, monospace" font-size="16">
+    <rect width="310" height="180" rx="10" fill="#131a22" stroke="#2a323d"/>
+    <circle cx="20" cy="20" r="5" fill="#f85149"/>
+    <circle cx="38" cy="20" r="5" fill="#f0b429"/>
+    <circle cx="56" cy="20" r="5" fill="#4ade80"/>
+    <text x="20" y="62" fill="#4ade80">$ nmap -sV lab.local</text>
+    <text x="20" y="92" fill="#8b96a5">22/tcp  open  ssh</text>
+    <text x="20" y="116" fill="#8b96a5">80/tcp  open  http</text>
+    <text x="20" y="140" fill="#58a6ff">learn → build → prove</text>
+    <text x="20" y="164" fill="#5c6673">▍</text>
+  </g>
+</svg>
