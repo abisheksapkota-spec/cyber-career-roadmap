@@ -4,6 +4,8 @@
 
 # Cyber Security Career Roadmap
 
+https://abisheksapkota-spec.github.io/cyber-career-roadmap/
+
 My plan to land my first IT / cyber security job while studying the **Bachelor of Information Technology (Cyber Security major, App Dev minor)** at CQUniversity. Everything lives in this repo: roadmap, checklist, daily log, notes, writeups and projects.
 
 ## Progress
