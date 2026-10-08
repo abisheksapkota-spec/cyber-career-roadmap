@@ -225,7 +225,7 @@ function logMarkdown(dateKey, minutes, note) {
     '## Tomorrow\n\n- \n';
 }
 function githubNewFileUrl(repo, dateKey, md) {
-  return 'https://github.com/' + repo + '/new/main/daily-log?filename=' +
+  return 'https://github.com/' + repo + '/new/main?filename=daily-log/' +
     encodeURIComponent(dateKey + '.md') + '&value=' + encodeURIComponent(md);
 }
 function validRepo(r) {
