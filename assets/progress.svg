@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 56" width="600" height="56" role="img" aria-label="Checklist progress 4%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 56" width="600" height="56" role="img" aria-label="Checklist progress 9%">
   <rect width="600" height="56" rx="8" fill="#0d1117" stroke="#2a323d"/>
   <rect x="12" y="30" width="576" height="10" rx="5" fill="#1e2530"/>
-  <rect x="12" y="30" width="23" height="10" rx="5" fill="#4ade80"/>
+  <rect x="12" y="30" width="52" height="10" rx="5" fill="#4ade80"/>
   <text x="12" y="20" font-family="Consolas, monospace" font-size="13" fill="#8b96a5">Checklist progress</text>
-  <text x="588" y="20" font-family="Consolas, monospace" font-size="13" fill="#4ade80" text-anchor="end">3 / 74 (4%)</text>
+  <text x="588" y="20" font-family="Consolas, monospace" font-size="13" fill="#4ade80" text-anchor="end">7 / 74 (9%)</text>
 </svg>

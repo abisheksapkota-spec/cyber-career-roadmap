@@ -13,14 +13,14 @@ My plan to land my first IT / cyber security job while studying the **Bachelor o
 <!-- PROGRESS:START -->
 | | |
 |---|---|
-| Checklist | **3 / 74** (4%) |
+| Checklist | **7 / 74** (9%) |
 | Current streak | **1** day |
 | Longest streak | 1 day |
 | Days logged | 1 |
-| Last 14 days | ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜🟩 |
-| As of | 2026-10-08 |
+| Last 14 days | ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜🟩⬜ |
+| As of | 2026-10-09 |
 | Already done | 3 / 3 |
-| Part 1: 3-month holiday plan (8 Oct 2026 to 7 Jan 2027) | 0 / 38 |
+| Part 1: 3-month holiday plan (8 Oct 2026 to 7 Jan 2027) | 4 / 38 |
 | Part 2: Career roadmap to graduation (mid 2028) | 0 / 33 |
 
 ![Checklist progress](assets/progress.svg)
