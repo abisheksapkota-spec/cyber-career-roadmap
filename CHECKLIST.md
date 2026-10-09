@@ -16,10 +16,10 @@ This file is the **source of truth** for your progress. Edit it on GitHub (penci
 
 **Week 1**
 
-- [ ] Upload this roadmap repo to your GitHub and turn on GitHub Pages (see README)
-- [ ] Finish LinkedIn profile (headline, About, education) and add your Cisco and PMI badges
-- [ ] Create TryHackMe account and start the Pre Security path
-- [ ] Join TryHackMe and HackTheBox Discord servers
+- [x] Upload this roadmap repo to your GitHub and turn on GitHub Pages (see README)
+- [x] Finish LinkedIn profile (headline, About, education) and add your Cisco and PMI badges
+- [x] Create TryHackMe account and start the Pre Security path
+- [x] Join TryHackMe and HackTheBox Discord servers
 
 **Week 2**
 
