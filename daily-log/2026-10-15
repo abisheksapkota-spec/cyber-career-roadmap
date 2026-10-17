@@ -1,0 +1,5 @@
+# 2026-10-15: Linux Fundamentals Part 3 (TryHackMe)
+
+- Started the processes task.
+- Used `ps aux` on the AttackBox and learned the output gets truncated (`ps auxww` shows full lines).
+- Learned the target machine is separate from the AttackBox.
