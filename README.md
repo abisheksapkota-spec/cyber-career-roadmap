@@ -15,9 +15,9 @@ My plan to land my first IT / cyber security job while studying the **Bachelor o
 |---|---|
 | Checklist | **7 / 74** (9%) |
 | Current streak | **1** day |
-| Longest streak | 1 day |
-| Days logged | 4 |
-| Last 14 days | ⬜⬜⬜⬜🟩⬜⬜⬜🟩⬜🟩⬜⬜🟩 |
+| Longest streak | 2 days |
+| Days logged | 5 |
+| Last 14 days | ⬜⬜⬜⬜🟩⬜⬜⬜🟩⬜🟩🟩⬜🟩 |
 | As of | 2026-10-17 |
 | Already done | 3 / 3 |
 | Part 1: 3-month holiday plan (8 Oct 2026 to 7 Jan 2027) | 4 / 38 |
